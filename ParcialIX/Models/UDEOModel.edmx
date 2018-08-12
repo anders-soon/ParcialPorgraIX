@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="UDEOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alumnos">
+          <Key>
+            <PropertyRef Name="Id_alumnos" />
+          </Key>
+          <Property Name="Id_alumnos" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Apellido" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono" Type="int" />
+        </EntityType>
+        <EntityType Name="Asignatura">
+          <Key>
+            <PropertyRef Name="Id_Asignatura" />
+          </Key>
+          <Property Name="Id_Asignatura" Type="int" Nullable="false" />
+          <Property Name="Id_Profesor" Type="int" />
+          <Property Name="Id_alumno" Type="int" />
+          <Property Name="Id_Aulas" Type="int" />
+          <Property Name="Id_Titulaciones" Type="int" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Credito" Type="int" />
+        </EntityType>
+        <EntityType Name="Aulas">
+          <Key>
+            <PropertyRef Name="Id_Aulas" />
+          </Key>
+          <Property Name="Id_Aulas" Type="int" Nullable="false" />
+          <Property Name="Id_Asignatura" Type="int" />
+          <Property Name="Capacidad" Type="varchar" MaxLength="50" />
+          <Property Name="Material" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Profesores">
+          <Key>
+            <PropertyRef Name="Id_Profesor" />
+          </Key>
+          <Property Name="Id_Profesor" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Apellido" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono" Type="int" />
+          <Property Name="Direccion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Titulaciones">
+          <Key>
+            <PropertyRef Name="Id_Titulaciones" />
+          </Key>
+          <Property Name="Id_Titulaciones" Type="int" Nullable="false" />
+          <Property Name="Id_Asignatura" Type="int" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="Fk_Alumno">
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="0..1" />
+          <End Role="Asignatura" Type="Self.Asignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumnos">
+              <PropertyRef Name="Id_alumnos" />
+            </Principal>
+            <Dependent Role="Asignatura">
+              <PropertyRef Name="Id_alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Aulas">
+          <End Role="Aulas" Type="Self.Aulas" Multiplicity="0..1" />
+          <End Role="Asignatura" Type="Self.Asignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aulas">
+              <PropertyRef Name="Id_Aulas" />
+            </Principal>
+            <Dependent Role="Asignatura">
+              <PropertyRef Name="Id_Aulas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Profesor">
+          <End Role="Profesores" Type="Self.Profesores" Multiplicity="0..1" />
+          <End Role="Asignatura" Type="Self.Asignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesores">
+              <PropertyRef Name="Id_Profesor" />
+            </Principal>
+            <Dependent Role="Asignatura">
+              <PropertyRef Name="Id_Profesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_titulaciones">
+          <End Role="Titulaciones" Type="Self.Titulaciones" Multiplicity="0..1" />
+          <End Role="Asignatura" Type="Self.Asignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Titulaciones">
+              <PropertyRef Name="Id_Titulaciones" />
+            </Principal>
+            <Dependent Role="Asignatura">
+              <PropertyRef Name="Id_Titulaciones" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UDEOModelStoreContainer">
+          <EntitySet Name="Alumnos" EntityType="Self.Alumnos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Asignatura" EntityType="Self.Asignatura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Aulas" EntityType="Self.Aulas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profesores" EntityType="Self.Profesores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Titulaciones" EntityType="Self.Titulaciones" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Fk_Alumno" Association="Self.Fk_Alumno">
+            <End Role="Alumnos" EntitySet="Alumnos" />
+            <End Role="Asignatura" EntitySet="Asignatura" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Aulas" Association="Self.Fk_Aulas">
+            <End Role="Aulas" EntitySet="Aulas" />
+            <End Role="Asignatura" EntitySet="Asignatura" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Profesor" Association="Self.Fk_Profesor">
+            <End Role="Profesores" EntitySet="Profesores" />
+            <End Role="Asignatura" EntitySet="Asignatura" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_titulaciones" Association="Self.Fk_titulaciones">
+            <End Role="Titulaciones" EntitySet="Titulaciones" />
+            <End Role="Asignatura" EntitySet="Asignatura" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UDEOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Alumnos">
+          <Key>
+            <PropertyRef Name="Id_alumnos" />
+          </Key>
+          <Property Name="Id_alumnos" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="Int32" />
+          <NavigationProperty Name="Asignatura" Relationship="Self.Fk_Alumno" FromRole="Alumnos" ToRole="Asignatura" />
+        </EntityType>
+        <EntityType Name="Asignatura">
+          <Key>
+            <PropertyRef Name="Id_Asignatura" />
+          </Key>
+          <Property Name="Id_Asignatura" Type="Int32" Nullable="false" />
+          <Property Name="Id_Profesor" Type="Int32" />
+          <Property Name="Id_alumno" Type="Int32" />
+          <Property Name="Id_Aulas" Type="Int32" />
+          <Property Name="Id_Titulaciones" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Credito" Type="Int32" />
+          <NavigationProperty Name="Alumnos" Relationship="Self.Fk_Alumno" FromRole="Asignatura" ToRole="Alumnos" />
+          <NavigationProperty Name="Aulas" Relationship="Self.Fk_Aulas" FromRole="Asignatura" ToRole="Aulas" />
+          <NavigationProperty Name="Profesores" Relationship="Self.Fk_Profesor" FromRole="Asignatura" ToRole="Profesores" />
+          <NavigationProperty Name="Titulaciones" Relationship="Self.Fk_titulaciones" FromRole="Asignatura" ToRole="Titulaciones" />
+        </EntityType>
+        <EntityType Name="Aulas">
+          <Key>
+            <PropertyRef Name="Id_Aulas" />
+          </Key>
+          <Property Name="Id_Aulas" Type="Int32" Nullable="false" />
+          <Property Name="Id_Asignatura" Type="Int32" />
+          <Property Name="Capacidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Material" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Asignatura" Relationship="Self.Fk_Aulas" FromRole="Aulas" ToRole="Asignatura" />
+        </EntityType>
+        <EntityType Name="Profesores">
+          <Key>
+            <PropertyRef Name="Id_Profesor" />
+          </Key>
+          <Property Name="Id_Profesor" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="Int32" />
+          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Asignatura" Relationship="Self.Fk_Profesor" FromRole="Profesores" ToRole="Asignatura" />
+        </EntityType>
+        <EntityType Name="Titulaciones">
+          <Key>
+            <PropertyRef Name="Id_Titulaciones" />
+          </Key>
+          <Property Name="Id_Titulaciones" Type="Int32" Nullable="false" />
+          <Property Name="Id_Asignatura" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Asignatura" Relationship="Self.Fk_titulaciones" FromRole="Titulaciones" ToRole="Asignatura" />
+        </EntityType>
+        <Association Name="Fk_Alumno">
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="0..1" />
+          <End Role="Asignatura" Type="Self.Asignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumnos">
+              <PropertyRef Name="Id_alumnos" />
+            </Principal>
+            <Dependent Role="Asignatura">
+              <PropertyRef Name="Id_alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Aulas">
+          <End Role="Aulas" Type="Self.Aulas" Multiplicity="0..1" />
+          <End Role="Asignatura" Type="Self.Asignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aulas">
+              <PropertyRef Name="Id_Aulas" />
+            </Principal>
+            <Dependent Role="Asignatura">
+              <PropertyRef Name="Id_Aulas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Profesor">
+          <End Role="Profesores" Type="Self.Profesores" Multiplicity="0..1" />
+          <End Role="Asignatura" Type="Self.Asignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesores">
+              <PropertyRef Name="Id_Profesor" />
+            </Principal>
+            <Dependent Role="Asignatura">
+              <PropertyRef Name="Id_Profesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_titulaciones">
+          <End Role="Titulaciones" Type="Self.Titulaciones" Multiplicity="0..1" />
+          <End Role="Asignatura" Type="Self.Asignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Titulaciones">
+              <PropertyRef Name="Id_Titulaciones" />
+            </Principal>
+            <Dependent Role="Asignatura">
+              <PropertyRef Name="Id_Titulaciones" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UDEOEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alumnos" EntityType="Self.Alumnos" />
+          <EntitySet Name="Asignatura" EntityType="Self.Asignatura" />
+          <EntitySet Name="Aulas" EntityType="Self.Aulas" />
+          <EntitySet Name="Profesores" EntityType="Self.Profesores" />
+          <EntitySet Name="Titulaciones" EntityType="Self.Titulaciones" />
+          <AssociationSet Name="Fk_Alumno" Association="Self.Fk_Alumno">
+            <End Role="Alumnos" EntitySet="Alumnos" />
+            <End Role="Asignatura" EntitySet="Asignatura" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Aulas" Association="Self.Fk_Aulas">
+            <End Role="Aulas" EntitySet="Aulas" />
+            <End Role="Asignatura" EntitySet="Asignatura" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Profesor" Association="Self.Fk_Profesor">
+            <End Role="Profesores" EntitySet="Profesores" />
+            <End Role="Asignatura" EntitySet="Asignatura" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_titulaciones" Association="Self.Fk_titulaciones">
+            <End Role="Titulaciones" EntitySet="Titulaciones" />
+            <End Role="Asignatura" EntitySet="Asignatura" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UDEOModelStoreContainer" CdmEntityContainer="UDEOEntities">
+          <EntitySetMapping Name="Alumnos">
+            <EntityTypeMapping TypeName="UDEOModel.Alumnos">
+              <MappingFragment StoreEntitySet="Alumnos">
+                <ScalarProperty Name="Id_alumnos" ColumnName="Id_alumnos" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Asignatura">
+            <EntityTypeMapping TypeName="UDEOModel.Asignatura">
+              <MappingFragment StoreEntitySet="Asignatura">
+                <ScalarProperty Name="Id_Asignatura" ColumnName="Id_Asignatura" />
+                <ScalarProperty Name="Id_Profesor" ColumnName="Id_Profesor" />
+                <ScalarProperty Name="Id_alumno" ColumnName="Id_alumno" />
+                <ScalarProperty Name="Id_Aulas" ColumnName="Id_Aulas" />
+                <ScalarProperty Name="Id_Titulaciones" ColumnName="Id_Titulaciones" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Credito" ColumnName="Credito" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Aulas">
+            <EntityTypeMapping TypeName="UDEOModel.Aulas">
+              <MappingFragment StoreEntitySet="Aulas">
+                <ScalarProperty Name="Id_Aulas" ColumnName="Id_Aulas" />
+                <ScalarProperty Name="Id_Asignatura" ColumnName="Id_Asignatura" />
+                <ScalarProperty Name="Capacidad" ColumnName="Capacidad" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profesores">
+            <EntityTypeMapping TypeName="UDEOModel.Profesores">
+              <MappingFragment StoreEntitySet="Profesores">
+                <ScalarProperty Name="Id_Profesor" ColumnName="Id_Profesor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Titulaciones">
+            <EntityTypeMapping TypeName="UDEOModel.Titulaciones">
+              <MappingFragment StoreEntitySet="Titulaciones">
+                <ScalarProperty Name="Id_Titulaciones" ColumnName="Id_Titulaciones" />
+                <ScalarProperty Name="Id_Asignatura" ColumnName="Id_Asignatura" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
